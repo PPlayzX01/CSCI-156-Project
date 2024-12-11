@@ -1,5 +1,8 @@
+import random
+import time
+
 class Item:
-    def __init__(self, name, units, price): # Changed init to __init__
+    def __init__(self, name, units, price):
         self.name = name
         self.units = units
         self.price = price
@@ -15,9 +18,6 @@ class Item:
 
     def update_units(self):
         self.units -= 1
-
-import random
-import time
 
 class Server:
     def __init__(self, items):
@@ -37,17 +37,20 @@ class Server:
 
     def bidding_round(self, item):
         deadline = time.time() + 60  # Set 1-minute deadline
-        # Receive bids from clients and determine the winner
+        # Run bidding for 1 minute
         while time.time() < deadline:
-            pass  # Wait for bids
+            # Let each client bid on the item during this round
+            for client in clients:
+                client.receive_bidding_info(item)
+            time.sleep(1)  # Simulate time passing, so clients don't flood bids too fast
 
         # After deadline, declare winner and reduce available units
-        if item.highest_bidder:
+        if item.highest_bidder
+        :
             item.update_units()
             print(f"{item.highest_bidder} wins {item.name} at price {item.highest_bid}")
         else:
             print(f"No bids for {item.name}")
-
 
 class Client:
     def __init__(self, name, max_bids):
@@ -59,6 +62,7 @@ class Client:
         if random.random() < 0.3:  # 30% chance not to bid
             return
 
+        # Ensure bid price is above the item price and below client's max bid
         bid_price = random.randint(item.price + 1, self.max_bids[item.name])
         print(f"{self.name} bids {bid_price} on {item.name}")
         item.place_bid(bid_price, self.name)
@@ -73,15 +77,14 @@ class Client:
             print(f"  {item}: {qty}")
 
 
-
-
-items = [Item("Item1", 20, 121), Item("Item2", 42, 656), ...]
+# Initialize the items and clients
+items = [Item("Item1", 20, 121), Item("Item2", 42, 656)]
 server = Server(items)
 
 clients = [
     Client("Client1", {"Item1": 150, "Item2": 700}),
     Client("Client2", {"Item1": 130, "Item2": 600}),
-    # Add more clients
+    # Add more clients if necessary
 ]
 
 # Simulate server-client interaction

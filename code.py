@@ -80,14 +80,14 @@ class Client:
             print(f"  {item}: {qty}")
 
 # Initialize the items and clients
-items = [Item("Item1", 40, 121), Item("Item2", 50, 656)]
+items = [Item("Item1", 20, 121), Item("Item2", 42, 656), Item("Item3", 24, 434), Item("Item4", 99, 71)]
 server = Server(items)
 
 clients = [
-    Client("Client1", {"Item1": 150, "Item2": 700}),
-    Client("Client2", {"Item1": 130, "Item2": 600}),
-    Client("Client3", {"Item1": 180, "Item2": 800}),
-    Client("Client4", {"Item1": 120, "Item2": 900}),
+    Client("Client1", {"Item1": 150, "Item2": 700, "Item3": 521, "Item4": 100}),
+    Client("Client2", {"Item1": 130, "Item2": 680, "Item3": 500, "Item4": 75}),
+    Client("Client3", {"Item1": 180, "Item2": 753, "Item3": 600, "Item4": 80}),
+    Client("Client4", {"Item1": 125, "Item2": 800, "Item3": 519, "Item4": 90}),
     # Add more clients here
 ]
 

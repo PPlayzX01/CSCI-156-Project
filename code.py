@@ -45,8 +45,7 @@ class Server:
             time.sleep(1)  # Simulate time passing, so clients don't flood bids too fast
 
         # After deadline, declare winner and reduce available units
-        if item.highest_bidder
-        :
+        if item.highest_bidder:
             item.update_units()
             print(f"{item.highest_bidder} wins {item.name} at price {item.highest_bid}")
         else:
@@ -63,9 +62,13 @@ class Client:
             return
 
         # Ensure bid price is above the item price and below client's max bid
-        bid_price = random.randint(item.price + 1, self.max_bids[item.name])
-        print(f"{self.name} bids {bid_price} on {item.name}")
-        item.place_bid(bid_price, self.name)
+        # Check if client's max bid is higher than the item price
+        if self.max_bids[item.name] > item.price:
+            bid_price = random.randint(item.price + 1, self.max_bids[item.name])
+            print(f"{self.name} bids {bid_price} on {item.name}")
+            item.place_bid(bid_price, self.name)
+        else:
+            print(f"{self.name} cannot bid on {item.name} as their maximum bid is lower than the item price.")
 
     def bid_on_items(self, items):
         for item in items:
@@ -76,18 +79,17 @@ class Client:
         for item, qty in self.won_items.items():
             print(f"  {item}: {qty}")
 
-
 # Initialize the items and clients
-items = [Item("Item1", 20, 121), Item("Item2", 42, 656)]
+items = [Item("Item1", 40, 121), Item("Item2", 50, 656)]
 server = Server(items)
 
 clients = [
     Client("Client1", {"Item1": 150, "Item2": 700}),
     Client("Client2", {"Item1": 130, "Item2": 600}),
-    # Add more clients if necessary
+    Client("Client3", {"Item1": 180, "Item2": 800}),
+    Client("Client4", {"Item1": 120, "Item2": 900}),
+    # Add more clients here
 ]
 
 # Simulate server-client interaction
 server.start_bidding()
-
-
